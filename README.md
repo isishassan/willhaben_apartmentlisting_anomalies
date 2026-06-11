@@ -15,6 +15,13 @@ built as a portfolio project demonstrating applied ML in a marketplace context.
 - Size/rooms covariance partially addressed via multivariate normal; matrix stability limited by sample size
 - District 15 size distribution underrepresented in reference data, district 18 size distribution overrepresented in reference data
 - outside_area/price covariance not modelled
+- outside_area not updated after luxury_features_low_price injection in initial version — fixed in v2; earlier eval results are unreliable
+- seller excluded from features despite being a plausible signal; private sellers tend to over/underprice but anomalies were not injected on this basis and reference sample too small to parametrise reliably
+
+## Learnings
+- Accuracy is a misleading metric for this dataset (~92.5% normal) — precision, recall and F1 are the relevant evaluation metrics
+- Isolation Forest is sensitive to contamination parameter; even when ground-truth proportion is known, model recall at default settings was ~30%
+- Data integrity between injection and derived features (e.g. outside_area) must be verified after each injection step
 
 ## Stack
 Python 3.11 — pandas, numpy, scikit-learn, scipy, matplotlib, geopandas, folium
@@ -24,5 +31,5 @@ Python 3.11 — pandas, numpy, scikit-learn, scipy, matplotlib, geopandas, foliu
 - [x] Parametrisation and EDA
 - [x] Synthetic data generator
 - [x] Anomaly injection
-- [ ] Model training and validation
+- [ ] Model training and validation (WIP)
 - [ ] Results documentation
